@@ -12,6 +12,8 @@ I chose Angular because I didn't have the time to study anything new for the tes
 
 If I had the time, I would have tried learning and writing the project in React as it was mentioned to be the language they use at the company.
 
+I wrote the [backend](https://github.com/Ander-J/horseapp-backend) in Java Spring.
+
 Though there is still a lot of improvement to be made and things I didn't have time to implement, I am overall happy with how the project turned out.
 
 ## Development server
