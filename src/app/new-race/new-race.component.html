@@ -1,0 +1,93 @@
+<div class="newRace">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="race-form">
+        <table *ngIf="race">
+            <tr>
+                <td>
+                    <h3>
+                        Create a new race
+                    </h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Track name</mat-label>
+                        <input id="track" matInput formControlName="track" />
+                        <mat-hint>Enter name of the track</mat-hint>
+                        <mat-error *ngIf="hasError('track', 'required')">Track name is required!</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="outline">
+                        <input matInput #datetime type="datetime-local" formControlName="date">
+                        <mat-hint>Enter date</mat-hint>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="outline">
+                        <mat-chip-list #horseList aria-label="Select horses">
+                            <mat-chip *ngFor="let horse of selectedHorses" (removed)="remove(horse)">
+                                {{horse.name}}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                            <input formControlName="participants" matInput placeholder="Find horses..."
+                                [matAutocomplete]="auto" [matChipInputFor]="horseList">
+                        </mat-chip-list>
+                        <mat-hint>Add participants to the race</mat-hint>
+                        <!-- <mat-error *ngIf="hasError('participantIds', 'invalidParticipants')">Race needs participants!</mat-error> -->
+                        <mat-error *ngIf="horseList.errorState">Race needs at least 2 participants!</mat-error>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)"
+                            [displayWith]="getHorseName">
+                            <mat-option *ngFor="let horse of filteredHorses | async" [value]="horse">
+                                {{horse.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div class="newHorse">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    New horse
+                </mat-panel-title>
+                <mat-panel-description>
+                    Add a new horse to the database
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <form [formGroup]="newHorse" (ngSubmit)="createNewHorse()" class="horse-form">
+                <table>
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Horse name</mat-label>
+                                <input id="newHorseName" matInput formControlName="name" />
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Horse color</mat-label>
+                                <input id="newHorseColor" matInput formControlName="color" />
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <button mat-raised-button color="basic" (click)="createNewHorse()" [disabled]="newHorse.invalid">
+                Add new horse
+            </button>
+        </mat-expansion-panel>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="basic" (click)="submit()" [disabled]="form.invalid">Create new race</button>
+</div>

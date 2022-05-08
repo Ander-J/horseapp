@@ -1,0 +1,28 @@
+table {
+    width: 100%;
+    min-width: 50em;
+}
+
+.data-table {
+    /* padding: 2em;
+	padding-top: 1em; */
+    max-height: 50%;
+    /* overflow-y: auto; */
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 5px;
+}
+
+.w-75 {
+    width: 75px;
+}
+
+tr.mat-row:hover {
+    background: rgba(231, 231, 231, 0.671);
+}

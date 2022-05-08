@@ -1,0 +1,54 @@
+.footer{
+    position: fixed;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    color: rgb(173, 173, 173);
+    width: 100%;
+    background-color: rgb(49, 49, 49);
+}
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+.title{
+    padding: 0.5em;
+}
+
+.menu-icon{
+    /* padding-top: 0.35em; */
+    background: #3d75ec;
+    color: white;
+    border-radius: 6px;
+    /* height: 2.7em; */
+    border: 1px solid #1f1cbe;
+}
+
+button.menu-icon:hover{
+    background: #6f9dff8a;
+    border: 1px solid #0b1c4b;
+}
+
+a{
+    color: rgb(173, 173, 173);
+    text-decoration: none;
+}
+
+a:hover{
+    color: rgb(216, 216, 216);
+    text-decoration: none;
+}
+
+.menu-item{
+    color: white;
+}
+
+body{
+    height: auto !important;
+    position: absolute !important;
+    top: 0 !important;
+}
+

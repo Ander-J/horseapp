@@ -1,0 +1,38 @@
+<div class="resultsDetails">
+    <ng-container *ngTemplateOutlet="horses ? horseTable : loading"></ng-container>
+    <ng-template #horseTable>
+        <div class="mainDetails">
+            <div class="betInfo" *ngIf="this.bet != null">
+                <p *ngIf="!bet.didWin">You placed a bet on {{betHorse.name}} and lost {{bet.betSize}}€</p>
+                <p *ngIf="bet.didWin">You placed a winning bet of {{bet.betSize}}€ on {{betHorse.name}}!</p>
+            </div>
+            <div class="betInfo" *ngIf="this.bet == null">
+                <p>You didn't place a bet on this race.</p>
+
+            </div>
+            <p class="fs150">Winner of the race was: {{winningHorse()}}</p>
+        </div>
+        <div class="horse-table" *ngIf="horses">
+            <p class="fs150">Final order</p>
+            <table mat-table [dataSource]="horses">
+                <ng-container matColumnDef="id">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Position</th>
+                    <td mat-cell *matCellDef="let i = index">{{i + 1}}</td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="color">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Color</th>
+                    <td mat-cell *matCellDef="let element">{{element.color}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </ng-template>
+    <ng-template #loading>
+        <p>loading data...</p>
+    </ng-template>
+</div>

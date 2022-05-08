@@ -1,0 +1,46 @@
+.raceDetails {
+    display: flex;
+    flex-direction: row;
+    margin-top: 4em;
+    margin-left: 4em;
+}
+
+.data {
+    width: fit-content;
+    margin-right: 2em;
+}
+
+table {
+    min-width: 20%;
+}
+
+.mainDetails {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.mainInfo {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 200%;
+}
+
+.betInfo {
+    margin-top: 2em;
+    font-size: 150%;
+}
+
+.horse-table {
+    display: flex;
+    flex-direction: column;
+    min-width: 20%
+}
+
+tr.mat-row:hover {
+    background: rgba(231, 231, 231, 0.671);
+}
+
+.selected-row {
+    font-weight: bold;
+}

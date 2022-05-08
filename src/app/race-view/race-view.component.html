@@ -1,0 +1,49 @@
+<div class="raceDetails">
+    <ng-container *ngTemplateOutlet="raceHorses ? content : loading"></ng-container>
+    <ng-template #content>
+        <div class="mainDetails">
+            <h1 class="mainInfo">Venue: {{race?.track}}</h1>
+            <h1 class="mainInfo">Date: {{displayDate}}</h1>
+            <div class="betInfo" *ngIf="!betPlaced">
+                <p>Currently selected horse: {{horseName}}</p>
+                <mat-form-field>
+                    <mat-label>Enter bet amount</mat-label>
+                    <input matInput #betAmount />
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="placeBet(selectedHorse.id,betAmount.value)">Place
+                    bet</button>
+            </div>
+            <div class="betInfo" *ngIf="betPlaced">
+                <p>Bet placed on: {{selectedHorse.name}}</p>
+                <p>Bet size: {{bet?.betSize}}€</p>
+            </div>
+            <div class="runRace">
+                <button mat-raised-button color="accent" (click)="runRace()">Run Race</button>
+            </div>
+        </div>
+        <div class="horse-table" *ngIf="raceHorses">
+            <p>Click on a horse to bet on it.</p>
+            <p>List of participants:</p>
+            <table mat-table [dataSource]="raceHorses">
+                <ng-container matColumnDef="id">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Id</th>
+                    <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="color">
+                    <th class="data" mat-header-cell *matHeaderCellDef>Color</th>
+                    <td mat-cell *matCellDef="let element">{{element.color}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row (click)="selectHorse(row)" [class.selected-row]="(row == selectedHorse)"
+                    *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </ng-template>
+    <ng-template #loading>
+        <p>loading data...</p>
+    </ng-template>
+</div>

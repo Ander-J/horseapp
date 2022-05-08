@@ -1,0 +1,35 @@
+.resultsDetails {
+    display: flex;
+    flex-direction: row;
+    margin-top: 4em;
+    margin-left: 4em;
+}
+
+.data {
+    width: fit-content;
+    margin-right: 2em;
+}
+
+.mainDetails {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+table {
+    min-width: 20%;
+}
+
+.betInfo {
+    font-size: 200%;
+}
+
+.horse-table {
+    display: flex;
+    flex-direction: column;
+    min-width: 20%
+}
+
+.fs150 {
+    font-size: 150%;
+}
