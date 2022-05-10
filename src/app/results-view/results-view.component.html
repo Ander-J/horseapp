@@ -10,7 +10,7 @@
                 <p>You didn't place a bet on this race.</p>
 
             </div>
-            <p class="fs150">Winner of the race was: {{winningHorse()}}</p>
+            <p *ngIf="results" class="fs150">Winner of the race was: {{winningHorse()}}</p>
         </div>
         <div class="horse-table" *ngIf="horses">
             <p class="fs150">Final order</p>

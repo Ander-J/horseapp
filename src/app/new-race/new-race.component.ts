@@ -1,9 +1,7 @@
-import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { Horse } from '../model/horse';
@@ -92,7 +90,6 @@ export class NewRaceComponent implements OnInit {
     this.horseService.post(horseToSave).subscribe(() => {
       this.clearNewHorse();
       this.horseService.updateFromDb().subscribe(newHorses => this.horses = newHorses);
-      console.log(this.horses)
     })
   }
 

@@ -16,14 +16,10 @@ import { ResultsService } from '../services/results.service';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  /* raceData: Race[] = this.raceService.getAll();
-  resultsData: Results[] = this.resultsService.getAll();
-  horseData: Horse[] = this.horseService.getAll();
-  betData: Bet[] = this.betService.getAll(); */
-  raceData: Race[] = [];
-  resultsData: Results[] = [];
-  horseData: Horse[] = [];
-  betData: Bet[] = [];
+  raceData: Race[];
+  resultsData: Results[];
+  horseData: Horse[];
+  betData: Bet[];
   displayedColumns: string[] = ['id', 'track', 'date', 'buttons']
   isRaceInvisible: boolean = true;
   isResultsInvisible: boolean = true;
@@ -31,13 +27,11 @@ export class MainPageComponent implements OnInit {
   constructor(private router: Router,
     private raceService: RaceService,
     private resultsService: ResultsService,
-    private horseService: HorseService,
-    private betService: BetService) { }
+    private horseService: HorseService) { }
 
 
   @ViewChild(MatTable) raceTable: MatTable<Race>;
   @ViewChild(MatTable) resultsTable: MatTable<Results>;
-  @ViewChild(MatTable) horseTable: MatTable<Horse>;
 
   ngOnInit(): void {
     this.updateAllData()
@@ -46,20 +40,26 @@ export class MainPageComponent implements OnInit {
   updateAllData() {
     this.horseService.updateFromDb().subscribe(horses => {
       this.horseData = horses
-      this.horseTable.renderRows()
     });
     this.raceService.updateFromDb().subscribe(races => {
       this.raceData = races
-      this.raceTable.renderRows()
     })
     this.resultsService.updateFromDb().subscribe(results => {
       this.resultsData = results
-      this.resultsTable.renderRows()
     });
   }
 
   formatDate(date: string) {
     return new Date(date).toLocaleString()
+  }
+
+  checkIfData(data: any){
+    if (data){
+      if (data.length > 0){
+        return true
+      }
+    }
+    return false
   }
 
   newRace() {

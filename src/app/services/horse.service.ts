@@ -7,7 +7,6 @@ import { Horse } from '../model/horse';
   providedIn: 'root'
 })
 export class HorseService {
-  horseData: Horse[] = [];
   private apiUrl = 'https://horseappv1-4f5hrwpfca-uc.a.run.app/api/horse'
   /* private apiUrl = 'http://localhost:8080/api/horse' */
 
@@ -19,9 +18,9 @@ export class HorseService {
       .pipe(map(data => data), catchError(this.handleError))
   }
 
-  getAll() {
+  /* getAll() {
     return this.horseData
-  }
+  } */
 
   getHorses(array: string[]) {
     var horseList: Array<Horse> = []
@@ -36,13 +35,9 @@ export class HorseService {
   }
 
   updateFromDb(): Observable<Horse[]> {
-    let obsData: Observable<Horse[]>;
-    obsData = this.http
+    return this.http
       .get<Horse[]>(this.apiUrl)
       .pipe(map(data => data), catchError(this.handleError))
-    obsData.subscribe(horseList => this.horseData = horseList)
-
-    return obsData
   }
 
   post(data: Horse) {

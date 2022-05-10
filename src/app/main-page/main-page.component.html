@@ -1,6 +1,6 @@
 <mat-tab-group dynamicHeight>
     <mat-tab label="Upcoming races">
-        <div class="data-table">
+        <div class="data-table" *ngIf="raceData">
             <table mat-table [dataSource]="raceData">
                 <ng-container matColumnDef="id">
                     <th class="w-75" mat-header-cell *matHeaderCellDef>Id</th>
@@ -18,7 +18,7 @@
                 </ng-container>
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef>Date and time</th>
-                    <td (mouseover)="resultsHover(element.id)" (mouseout)="resultsVisible(false)" mat-cell
+                    <td (mouseover)="raceHover(element.id)" (mouseout)="raceVisible(false)" mat-cell
                         *matCellDef="let element">
                         {{formatDate(element.date)}}
                     </td>
@@ -40,12 +40,12 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
         </div>
-        <div *ngIf="raceData.length < 1">
+        <div *ngIf="!checkIfData(raceData)">
             <p style="margin-left: 3em; margin-top: 3em;">No upcoming races. Add a new race by using the "+" button</p>
         </div>
     </mat-tab>
     <mat-tab label="Previous races">
-        <div class="data-table">
+        <div class="data-table" *ngIf="resultsData">
             <table mat-table [dataSource]="resultsData">
                 <ng-container matColumnDef="id">
                     <th class="w-75" mat-header-cell *matHeaderCellDef>Id</th>
@@ -80,17 +80,17 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
         </div>
-        <div *ngIf="resultsData.length < 1">
+        <div *ngIf="!checkIfData(resultsData)">
             <p style="margin-left: 3em; margin-top: 3em;">No results to display</p>
         </div>
     </mat-tab>
 </mat-tab-group>
 
-<div id="race-view" *ngIf="raceData.length > 0" [hidden]="isRaceInvisible">
+<div id="race-view" *ngIf="checkIfData(raceData)" [hidden]="isRaceInvisible">
     <p style="margin-left: 3em; margin-top: 3em;">Click on the race to view the betting window.</p>
     <app-race-view></app-race-view>
 </div>
 
-<div id="results-view" *ngIf="resultsData.length > 0" [hidden]="isResultsInvisible">
+<div id="results-view" *ngIf="checkIfData(resultsData)" [hidden]="isResultsInvisible">
     <app-results-view></app-results-view>
 </div>

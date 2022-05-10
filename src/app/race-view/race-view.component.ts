@@ -1,14 +1,10 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 import { Bet } from '../model/bet';
 import { Horse } from '../model/horse';
 import { Race } from '../model/race';
-import { Results } from '../model/results';
 import { BetService } from '../services/bet.service';
-import { HorseService } from '../services/horse.service';
 import { RaceService } from '../services/race.service';
-import { ResultsService } from '../services/results.service';
 
 @Component({
   selector: 'app-race-view',
@@ -17,6 +13,8 @@ import { ResultsService } from '../services/results.service';
 })
 export class RaceViewComponent implements OnInit, DoCheck {
   race: any;
+  raceData: Race[];
+  betData: Bet[];
   bet: Bet;
   id: string;
   displayDate: string;
@@ -28,11 +26,8 @@ export class RaceViewComponent implements OnInit, DoCheck {
 
   constructor(
     private raceService: RaceService,
-    private horseService: HorseService,
     private betService: BetService,
-    private resultsService: ResultsService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -52,12 +47,12 @@ export class RaceViewComponent implements OnInit, DoCheck {
         } else { this.bet = null; this.betPlaced = false }
       })
     })
-    console.log("horses " + this.raceHorses)
-    /* if(this.race == null){
-      var pathId = this.route.snapshot.url[1].path
-      console.log("am here")
-      this.race = this.raceService.getById(pathId)
-    } */
+    this.raceService.updateFromDb().subscribe(data => {
+      this.raceData = data
+    })
+    this.betService.updateFromDb().subscribe(data => {
+      this.betData = data
+    })
   }
 
 
@@ -65,19 +60,34 @@ export class RaceViewComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     if (this.id !== localStorage.getItem('raceId')) {
       this.id = localStorage.getItem('raceId')
-      this.raceService.getById(this.id).subscribe(data => {
-        this.race = data
+      this.localRaceById(this.id)
+    }
+  }
+
+  localRaceById(id: string){
+    for (var r of this.raceData) {
+      if (r.id == id){
+        this.race = r
+        this.raceHorses = r.participants
         this.raceHorses = this.race.participants
         this.displayDate = new Date(this.race?.date).toLocaleString()
-        this.betService.getById(this.id).subscribe(betData => {
-          if (betData != null) {
-            this.bet = betData
-            this.betPlaced = true
-            this.selectedHorse = this.bet.betHorse
-          } else { this.bet = null; this.betPlaced = false }
-        })
-      })
+        this.localBetById(r.id)
+        break
+      }
     }
+  }
+
+  localBetById(id: string){
+    for (var b of this.betData){
+      if(b.raceId == id){
+        this.bet = b
+        this.betPlaced = true
+        this.selectedHorse = b.betHorse
+        break
+      }
+    }
+    this.bet = null
+    this.betPlaced = false
   }
 
   selectHorse(horse: Horse) {

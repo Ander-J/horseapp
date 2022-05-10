@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Horse } from '../model/horse';
 import { Race } from '../model/race';
 import { Results } from '../model/results';
 import { HorseService } from './horse.service';
@@ -10,7 +9,6 @@ import { HorseService } from './horse.service';
   providedIn: 'root'
 })
 export class RaceService {
-  raceData: Race[] = [];
   private apiUrl = 'https://horseappv1-4f5hrwpfca-uc.a.run.app/api/race'
   /* private apiUrl = 'http://localhost:8080/api/race' */
 
@@ -51,13 +49,9 @@ export class RaceService {
   }
 
   updateFromDb(): Observable<Race[]> {
-    let obsData: Observable<Race[]>;
-    obsData = this.http
+    return this.http
       .get<Race[]>(this.apiUrl)
       .pipe(map(data => data), catchError(this.handleError))
-    obsData.subscribe(raceList => this.raceData = raceList)
-
-    return obsData
   }
 
   postNewRace(data: Race) {

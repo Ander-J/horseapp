@@ -16,10 +16,10 @@ import { ResultsService } from './services/results.service';
 })
 export class AppComponent implements OnInit {
   title = 'horseapp';
-  raceData: Race[] = [];
+  /* raceData: Race[] = [];
   resultsData: Results[] = [];
   horseData: Horse[] = [];
-  betData: Bet[] = [];
+  betData: Bet[] = []; */
 
   constructor(private router: Router,
     private raceService: RaceService,
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.horseService.updateFromDb().subscribe(horses => {
+    /* this.horseService.updateFromDb().subscribe(horses => {
       this.horseData = horses
     });
     this.raceService.updateFromDb().subscribe(races => {
@@ -43,6 +43,6 @@ export class AppComponent implements OnInit {
     });
     this.betService.updateFromDb().subscribe(bets => {
       this.betData = bets
-    });
+    }); */
   }
 }

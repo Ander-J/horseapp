@@ -7,22 +7,24 @@ import { Bet } from '../model/bet';
   providedIn: 'root'
 })
 export class BetService {
-  betData: Bet[] = [];
+
   private apiUrl = 'https://horseappv1-4f5hrwpfca-uc.a.run.app/api/bet'
   /* private apiUrl = 'http://localhost:8080/api/bet' */
   constructor(private http: HttpClient) { }
 
-  getAll(): Bet[] {
+  /* getAll(): Bet[] {
     return this.betData
-  }
+  } */
 
-  betExists(betId: string): boolean {
-    for (var bet of this.betData) {
-      if (bet.raceId == betId) {
-        return true
+  betExists(betId: string) {
+    this.updateFromDb().subscribe(data => {
+      for (var bet of data) {
+        if (bet.raceId == betId) {
+          return true
+        }
       }
-    }
-    return false
+      return false
+    })
   }
 
   getById(betId: string): Observable<Bet> {
@@ -38,13 +40,9 @@ export class BetService {
   }
 
   updateFromDb(): Observable<Bet[]> {
-    let obsData: Observable<Bet[]>;
-    obsData = this.http
+    return this.http
       .get<Bet[]>(this.apiUrl)
       .pipe(map(data => data), catchError(this.handleError))
-    obsData.subscribe(betList => this.betData = betList)
-
-    return obsData
   }
 
   private handleError(res: HttpErrorResponse | any) {
